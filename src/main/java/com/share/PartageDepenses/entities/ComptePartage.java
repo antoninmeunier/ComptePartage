@@ -1,14 +1,15 @@
 package com.share.PartageDepenses.entities;
 
+import java.io.Serializable;
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-
-import java.io.Serializable;
-import java.util.Collection;
 
 @Entity
 public class ComptePartage implements Serializable {
@@ -20,13 +21,12 @@ public class ComptePartage implements Serializable {
 	private long totalComptePartage;
 	private String titreComptePartage;
 	
-	@OneToMany(mappedBy="comptePartage",fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy="comptePartages1User")
 	private Collection<User> users;
 
-	@OneToMany(mappedBy="beneficiaires")
-	private Collection<User> depenses;
+	@OneToMany(mappedBy="comptePartage",fetch = FetchType.LAZY)
+	private Collection<Depense> depenses;
 
-	
 	
 	//Getters & Setters
 	public Long getIdComptePartage() {
@@ -61,20 +61,25 @@ public class ComptePartage implements Serializable {
 		this.users = users;
 	}
 
-	public Collection<User> getDepenses() {
+	public Collection<Depense> getDepenses() {
 		return depenses;
 	}
 
-	public void setDepenses(Collection<User> depenses) {
+	public void setDepenses(Collection<Depense> depenses) {
 		this.depenses = depenses;
 	}
 
-	
 	//Constructors 
-	public ComptePartage(Long idComptePartage, long totalComptePartage, String titreComptePartage,
-			Collection<User> users, Collection<User> depenses) {
+	
+	public ComptePartage(String titreComptePartage) {
 		super();
-		this.idComptePartage = idComptePartage;
+		this.totalComptePartage = 0;
+		this.titreComptePartage = titreComptePartage;
+	}
+
+	public ComptePartage(long totalComptePartage, String titreComptePartage, Collection<User> users,
+			Collection<Depense> depenses) {
+		super();
 		this.totalComptePartage = totalComptePartage;
 		this.titreComptePartage = titreComptePartage;
 		this.users = users;

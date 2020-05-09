@@ -1,6 +1,6 @@
 package com.share.PartageDepenses.entities;
 
-import java.util.Collection;
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -10,21 +10,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+
 @Entity
-public class Depense {
+public class Depense implements Serializable{
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idDepense;
 	private String titre;
 	private long montant;
-	private User payeur;
+	private String nomPayeur;
 	private Date date;
-	
+
 	@ManyToOne
 	@JoinColumn(name="idComptePartage")
-	private Collection<User> beneficiaires;
-
+	private ComptePartage comptePartage;
 	
+
 	
 	// Getters & Setters
 	public Long getIdDepense() {
@@ -51,12 +52,12 @@ public class Depense {
 		this.montant = montant;
 	}
 
-	public User getPayeur() {
-		return payeur;
+	public String getPayeur() {
+		return nomPayeur;
 	}
 
-	public void setPayeur(User payeur) {
-		this.payeur = payeur;
+	public void setPayeur(String payeur) {
+		this.nomPayeur = payeur;
 	}
 
 	public Date getDate() {
@@ -67,30 +68,64 @@ public class Depense {
 		this.date = date;
 	}
 
-	public Collection<User> getBeneficiaires() {
-		return beneficiaires;
+	public ComptePartage getComptePartage() {
+		return comptePartage;
 	}
 
-	public void setBeneficiaires(Collection<User> beneficiaires) {
-		this.beneficiaires = beneficiaires;
+	public void setComptePartage(ComptePartage comptePartage) {
+		this.comptePartage = comptePartage;
 	}
-	
-	
+
 	
 	// Constructors
 
-	public Depense(Long idDepense, String titre, long montant, User payeur, Date date, Collection<User> beneficiaires) {
-		super();
-		this.idDepense = idDepense;
-		this.titre = titre;
-		this.montant = montant;
-		this.payeur = payeur;
-		this.date = date;
-		this.beneficiaires = beneficiaires;
-	}
+//
+//	public Depense(String titre, long montant, User payeur, Date date, Collection<User> beneficiaires) {
+//		super();
+//		this.titre = titre;
+//		this.montant = montant;
+//		this.payeur = payeur;
+//		this.date = date;
+//		this.beneficiaires = beneficiaires;
+//	}
+	
 
 	public Depense() {
 		super();
+	}
+
+	public Depense(String titre, long montant, String payeur, Date date) {
+	super();
+	this.titre = titre;
+	this.montant = montant;
+	this.nomPayeur = payeur;
+	this.date = date;
+}
+
+	public Depense(String titre, long montant, String payeur, Date date, ComptePartage comptePartage) {
+		super();
+		this.titre = titre;
+		this.montant = montant;
+		this.nomPayeur = payeur;
+		this.date = date;
+		this.comptePartage = comptePartage;
+	}
+	
+	
+	public Depense(String titre, long montant, Date date, ComptePartage comptePartage) {
+		super();
+		this.titre = titre;
+		this.montant = montant;
+		this.date = date;
+		this.comptePartage = comptePartage;
+	}
+	
+
+
+	@Override
+	public String toString() {
+		return "Depense [idDepense=" + idDepense + ", titre=" + titre + ", montant=" + montant + ", payeur=" + nomPayeur
+				+ ", date=" + date + ", comptePartage=" + comptePartage + "]";
 	}
 	
 	
