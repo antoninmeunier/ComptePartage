@@ -18,7 +18,7 @@ public class Depense implements Serializable{
 	private Long idDepense;
 	private String titre;
 	private long montant;
-	private String nomPayeur;
+	private String payeur;
 	private Date date;
 
 	@ManyToOne
@@ -53,11 +53,11 @@ public class Depense implements Serializable{
 	}
 
 	public String getPayeur() {
-		return nomPayeur;
+		return payeur;
 	}
 
 	public void setPayeur(String payeur) {
-		this.nomPayeur = payeur;
+		this.payeur = payeur;
 	}
 
 	public Date getDate() {
@@ -98,7 +98,7 @@ public class Depense implements Serializable{
 	super();
 	this.titre = titre;
 	this.montant = montant;
-	this.nomPayeur = payeur;
+	this.payeur = payeur;
 	this.date = date;
 }
 
@@ -106,7 +106,7 @@ public class Depense implements Serializable{
 		super();
 		this.titre = titre;
 		this.montant = montant;
-		this.nomPayeur = payeur;
+		this.payeur = payeur;
 		this.date = date;
 		this.comptePartage = comptePartage;
 	}
@@ -124,7 +124,7 @@ public class Depense implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Depense [idDepense=" + idDepense + ", titre=" + titre + ", montant=" + montant + ", payeur=" + nomPayeur
+		return "Depense [idDepense=" + idDepense + ", titre=" + titre + ", montant=" + montant + ", payeur=" + payeur
 				+ ", date=" + date + ", comptePartage=" + comptePartage + "]";
 	}
 	

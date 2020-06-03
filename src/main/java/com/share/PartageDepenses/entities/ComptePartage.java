@@ -3,11 +3,14 @@ package com.share.PartageDepenses.entities;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -20,6 +23,7 @@ public class ComptePartage implements Serializable {
 	private Long idComptePartage;
 	private long totalComptePartage;
 	private String titreComptePartage;
+	
 	
 	@ManyToMany(mappedBy="comptePartages1User")
 	private Collection<User> users;
