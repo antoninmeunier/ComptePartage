@@ -68,7 +68,7 @@ import com.share.PartageDepenses.security.services.UserDetailsImpl;
 			return ResponseEntity.ok(new JwtResponse(jwt, 
 													 userDetails.getIdUser(), 
 													 userDetails.getUsername(), 
-													 userDetails.getPseudo(), 
+													 userDetails.getEmail(), 
 													 roles));
 		}
 
@@ -80,7 +80,7 @@ import com.share.PartageDepenses.security.services.UserDetailsImpl;
 						.body(new MessageResponse("Ce nom d'utilisateur est déja pris"));
 			}
 
-			if (userRepository.existsByPseudo(signUpRequest.getPseudo())) {
+			if (userRepository.existsByEmail(signUpRequest.getEmail())) {
 				return ResponseEntity
 						.badRequest()
 						.body(new MessageResponse("Pseudo déja pris"));
@@ -88,7 +88,7 @@ import com.share.PartageDepenses.security.services.UserDetailsImpl;
 
 			// Create new user's account
 			User user = new User(signUpRequest.getUsername(), 
-								 signUpRequest.getPseudo(),
+								 signUpRequest.getEmail(),
 								 encoder.encode(signUpRequest.getPassword()));
 
 			Set<String> strRoles = signUpRequest.getRole();
@@ -105,13 +105,6 @@ import com.share.PartageDepenses.security.services.UserDetailsImpl;
 						Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
 								.orElseThrow(() -> new RuntimeException("Ceci n'est pas un rôle valide"));
 						roles.add(adminRole);
-
-						break;
-					case "mod":
-						Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-								.orElseThrow(() -> new RuntimeException("Ceci n'est pas un rôle valide"));
-						roles.add(modRole);
-
 						break;
 					default:
 						Role userRole = roleRepository.findByName(ERole.ROLE_USER)

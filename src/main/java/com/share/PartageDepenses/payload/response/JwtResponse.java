@@ -1,6 +1,9 @@
 package com.share.PartageDepenses.payload.response;
 
+import java.util.Collection;
 import java.util.List;
+
+import com.share.PartageDepenses.entities.ComptePartage;
 
 public class JwtResponse {
 	
@@ -9,6 +12,7 @@ public class JwtResponse {
 	private Long id;
 	private String username;
 	private String email;
+	private Collection<ComptePartage> comptePartages1User;
 	private List<String> roles;
 
 	public JwtResponse(String accessToken, Long id, String username, String email, List<String> roles) {
@@ -18,6 +22,20 @@ public class JwtResponse {
 		this.email = email;
 		this.roles = roles;
 	}
+	
+	
+	public JwtResponse(String accessToken, Long id, String username, String email,
+			Collection<ComptePartage> comptePartages1User, List<String> roles) {
+		super();
+		this.token = accessToken;
+		this.id = id;
+		this.username = username;
+		this.email = email;
+		this.comptePartages1User = comptePartages1User;
+		this.roles = roles;
+	}
+
+
 
 	public String getAccessToken() {
 		return token;
@@ -39,16 +57,8 @@ public class JwtResponse {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getEmail() {
 		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getUsername() {
@@ -63,4 +73,10 @@ public class JwtResponse {
 		return roles;
 	}
 
+	public Collection<ComptePartage> getComptePartages1User() {
+		return comptePartages1User;
+	}
+
+
+	
 }

@@ -13,7 +13,7 @@ public class SignUpRequest {
  
     @NotBlank
     @Size(max = 50)
-    private String pseudo;
+    private String email;
     
     private Set<String> role;
     
@@ -30,12 +30,12 @@ public class SignUpRequest {
     }
  
 
-    public String getPseudo() {
-		return pseudo;
+    public String getEmail() {
+		return email;
 	}
 
-	public void setPseudo(String pseudo) {
-		this.pseudo = pseudo;
+	public void setPseudo(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {

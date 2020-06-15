@@ -16,26 +16,26 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(uniqueConstraints = { 
-	@UniqueConstraint(columnNames = "pseudo"),
+	@UniqueConstraint(columnNames = "email"),
 	@UniqueConstraint(columnNames = "username") 
 })
 public class User implements Serializable {
 	
 	@Id @GeneratedValue(strategy =GenerationType.IDENTITY)
 	private Long idUser;
-	private String pseudo;
+	@NotBlank
+	private String email;
+	@NotBlank
 	private String username;
+	@NotBlank
 	private String password;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-			name="User_comptes",
-			joinColumns= {@JoinColumn(name="idUser")},
-			inverseJoinColumns= {@JoinColumn(name="idComptePartage")}
-			)
+	@ManyToMany(mappedBy="users")
 	private Collection<ComptePartage> comptePartages1User;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -51,12 +51,6 @@ public class User implements Serializable {
 	public void setIdUser(Long idUser) {
 		this.idUser = idUser;
 	}
-	public String getPseudo() {
-		return pseudo;
-	}
-	public void setPseudo(String pseudo) {
-		this.pseudo = pseudo;
-	}
 	
 	public String getUsername() {
 		return username;
@@ -64,6 +58,13 @@ public class User implements Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -98,21 +99,21 @@ public class User implements Serializable {
 		super();
 	}
 	
-	public User(String pseudo, Collection<ComptePartage> comptePartages1User) {
+	public User(String email, Collection<ComptePartage> comptePartages1User) {
 		super();
-		this.pseudo = pseudo;
+		this.email = email;
 		this.comptePartages1User = comptePartages1User;
 	}
 
-	public User(String pseudo, String username, String password) {
+	public User(String username, String email, String password) {
 		super();
-		this.pseudo = pseudo;
 		this.username = username;
+		this.email = email;
 		this.password = password;
 	}
-	public User(String pseudo, String username, String password, Set<Role> roles) {
+	public User(String email, String username, String password, Set<Role> roles) {
 		super();
-		this.pseudo = pseudo;
+		this.email = email;
 		this.username = username;
 		this.password = password;
 		this.roles = roles;
@@ -121,7 +122,7 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [idUser=" + idUser + " prenom=" +  ", pseudo=" + pseudo+"]";
+		return "User [idUser=" + idUser + " prenom=" +  ", email=" + email+"]";
 	}
 	
 	

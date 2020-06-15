@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class ComptePartage implements Serializable {
@@ -22,16 +23,20 @@ public class ComptePartage implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idComptePartage;
 	private long totalComptePartage;
+	@NotBlank
 	private String titreComptePartage;
 	
-	
-	@ManyToMany(mappedBy="comptePartages1User")
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name="User_comptes",
+			joinColumns= {@JoinColumn(name="=idComptePartage")},
+			inverseJoinColumns= {@JoinColumn(name="idUser")}
+			)
 	private Collection<User> users;
 
 	@OneToMany(mappedBy="comptePartage",fetch = FetchType.LAZY)
 	private Collection<Depense> depenses;
 
-	
 	//Getters & Setters
 	public Long getIdComptePartage() {
 		return idComptePartage;

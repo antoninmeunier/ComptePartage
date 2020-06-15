@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.share.PartageDepenses.entities.ComptePartage;
 import com.share.PartageDepenses.entities.User;
 
 public class UserDetailsImpl implements UserDetails {
@@ -19,21 +20,36 @@ public class UserDetailsImpl implements UserDetails {
 
 	private String username;
 
-	private String pseudo;
+	private String email;
 
 	@JsonIgnore
 	private String password;
 
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserDetailsImpl(Long idUser, String username, String pseudo, String password,
+	private Collection<ComptePartage> comptePartages1User;
+	
+	public UserDetailsImpl(Long idUser, String username, String email, String password,
 			Collection<? extends GrantedAuthority> authorities) {
 		this.idUser = idUser;
 		this.username = username;
-		this.pseudo = pseudo;
+		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
 	}
+	
+	public UserDetailsImpl(Long idUser, String username, String email, String password,
+			Collection<? extends GrantedAuthority> authorities, Collection<ComptePartage> comptePartages1User) {
+		super();
+		this.idUser = idUser;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.authorities = authorities;
+		this.comptePartages1User = comptePartages1User;
+	}
+
+
 
 	public static UserDetailsImpl build(User user) {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
@@ -43,7 +59,7 @@ public class UserDetailsImpl implements UserDetails {
 		return new UserDetailsImpl(
 				user.getIdUser(), 
 				user.getUsername(), 
-				user.getPseudo(),
+				user.getEmail(),
 				user.getPassword(), 
 				authorities);
 	}
@@ -57,8 +73,8 @@ public class UserDetailsImpl implements UserDetails {
 		return idUser;
 	}
 
-	public String getPseudo() {
-		return pseudo;
+	public String getEmail() {
+		return email;
 	}
 
 	@Override
@@ -69,6 +85,15 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public String getUsername() {
 		return username;
+	}
+	
+
+	public Collection<ComptePartage> getComptePartages1User() {
+		return comptePartages1User;
+	}
+
+	public void setComptePartages1User(Collection<ComptePartage> comptePartages1User) {
+		this.comptePartages1User = comptePartages1User;
 	}
 
 	@Override
